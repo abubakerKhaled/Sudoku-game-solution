@@ -65,4 +65,4 @@ class SudokuGame:
             for col in range(9):
                 if self.board[row][col] == 0:
                     return (row, col)
-        return None
+        return None, None
