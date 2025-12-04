@@ -15,7 +15,7 @@ sample_board = [
 def imperative_solver(sudoku: SudokuGame):
     row, col = sudoku.find_next_empty()
 
-    if row is None:
+    if row is None or col is None:
         return True
 
 

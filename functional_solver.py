@@ -23,7 +23,7 @@ def create_board_with_value(board: list[list], row: int, col: int, value: int):
 def functional_solver(sudoku: SudokuGame):
     row , col = sudoku.find_next_empty()
 
-    if row is None:
+    if row is None or col is None:
         return sudoku
 
     for guess in range(1, 10):
