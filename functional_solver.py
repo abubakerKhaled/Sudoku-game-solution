@@ -20,30 +20,50 @@ def create_board_with_value(board: list[list], row: int, col: int, value: int):
     new_board[row][col] = value
     return new_board
 
+
+def try_numbers(sudoku: SudokuGame, row: int, col: int, guess: int):
+    if guess > 9:
+        return None
+    
+    if sudoku.is_valid(row, col, guess):
+        new_board = create_board_with_value(sudoku.board, row, col, guess)
+        
+        result = functional_solver(SudokuGame(new_board))
+        
+        if result is not None:
+            return result
+        
+        return try_numbers(sudoku, row, col, guess + 1)
+    else:
+        return try_numbers(sudoku, row, col, guess + 1)
+
+
 def functional_solver(sudoku: SudokuGame):
-    row , col = sudoku.find_next_empty()
+    row, col = sudoku.find_next_empty()
 
     if row is None or col is None:
         return sudoku
 
-    for guess in range(1, 10):
-        if sudoku.is_valid(row, col, guess):
-            new_board = create_board_with_value(sudoku.board, row, col, guess)
-            result = functional_solver(SudokuGame(new_board))
-            if result:
-                return result
-
-    return None
+    return try_numbers(sudoku, row, col, 1)
 
 
 if __name__ == "__main__":
+    print("PURE FUNCTIONAL SUDOKU SOLVER")
+    print("=" * 50)
+    print("No loops - only recursion!")
+    print("=" * 50)
+    
     sudoku = SudokuGame(sample_board)
+    print("\nORIGINAL PUZZLE:")
     sudoku.print_board()
 
-    print("\n\n")
+    print("\n\nSOLVING...\n")
 
     result = functional_solver(sudoku)
+    
     if result is not None:
+        print("SOLUTION FOUND!")
+        print("\nSOLVED PUZZLE:")
         result.print_board()
     else:
         print("No solution exists")
