@@ -31,7 +31,7 @@ def imperative_solver(sudoku: SudokuGame):
             if sudoku.is_valid(row, col, guess):
                 sudoku.board[row][col] = guess
                 found_valid = True
-                i += 1  
+                i += 1
                 break
 
         if not found_valid:
