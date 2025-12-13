@@ -15,11 +15,16 @@ sample_board = [
 ]
 
 
-def create_board_with_value(board: list[list], row: int, col: int, value: int):
-    new_board = copy.deepcopy(board)
-    new_board[row][col] = value
-    return new_board
+def create_new_row(old_row, col, value):
+    return old_row[:col] + [value] + old_row[col + 1:]
 
+def create_board_with_value(board: list[list], row: int, col: int, value: int):
+    new_row = create_new_row(board[row], col, value)
+    
+    # Build new board: rows before + new row + rows after
+    new_board = board[:row] + [new_row] + board[row + 1:]
+    
+    return new_board
 
 def try_numbers(sudoku: SudokuGame, row: int, col: int, guess: int):
     if guess > 9:
